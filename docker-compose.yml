@@ -1,0 +1,19 @@
+services:
+    database:
+        image: postgres:13
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_PASSWORD: password
+        ports:
+            - 5432:5432
+
+    app:
+        image: prisma-poc
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: npm run dev
+        volumes:
+            - .:/app
+        environment:
+            DATABASE_URL: postgresql://postgres:password@database/postgres
